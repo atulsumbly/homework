@@ -1,53 +1,81 @@
 package com.java;
-import java.util.*;
+import java.util.Optional;
+import java.util.Scanner;
 
 public class MainClass {
-
-	public static void main(String[] args) {
-		int levelID;
-		System.out.println("Welcome to ticket system \n Press 1 for venue capacity \n 0 to exit");
-		boolean run=true;
-		while (run)
-		{
-		Scanner s=new Scanner(System.in);
-		int options=s.nextInt();
+public static void main(String[] args) {
 		
-			switch (options){
-			case 0:
-				System.out.println("program exits");
-				run=false;
-				break;
-			case 1:
-				Capacity c=new Capacity();
-				c.display();
-				System.out.println("Enter the levelID to find available seat in a level\n 1-Orchestra\n 2-Main\n 3-Balcony 1\n 4-Balcony 2");
-				boolean seatFind=true;
-				while(seatFind==true){
-				int i=s.nextInt();
-				System.out.println(c.availableSeatsLevel(i));
-				System.out.println("Do you want to check seat availability for another level (Y/N)");
-				char cont=s.next().charAt(0);
-				if(cont=='Y' ||cont=='y'){
-					seatFind=true;
-				}
-				else if (cont=='N'||cont=='n'){
-					seatFind=false;
-				}else
-				{System.out.println("invalid option");}
-				}
-				run=true;
-				break;
+			Capacity c=new Capacity();
+			SeatHold sHold=null;
+			c.display();
+			System.out.println("Welcome to ticket system \n Press 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
+			boolean run=true;
+			
+			Integer minLevel;
+			Integer maxLevel;
+			while (run){
+			try{
+				Scanner s=new Scanner(System.in);
+				int options=s.nextInt();
+			
+				switch (options){
+				case 0:
+					System.out.println("program exits");
+					run=false;
+					break;
 				
-			case 2:
-				
-				
-			default:
-					System.out.println("Invalid input, try again");
+				case 1:
+					
+					int i;
+					System.out.println("Enter the min level for capacity");
+					//minLevel=s.nextInt();
+					minLevel=null;
+					minLevel=(Optional.of(minLevel)== null ? 1 : minLevel);
+					System.out.println("Enter the max level for capacity");
+					maxLevel=s.nextInt();
+					maxLevel=(Optional.of(maxLevel)== null ? 4 : maxLevel);
+					for(i=minLevel;i<=maxLevel;i++){
+					System.out.println("Available Seat in "+c.levelName(Optional.of(i))+" "+c.numSeatsAvailable(Optional.of(i)));	
+					}
 					run=true;
 					break;
+					
+					
+				case 2:
+					int numSeats;
+					String customerEmail;
+					System.out.println("Hold seats");
+					System.out.println("Enter number of seats to hold");
+					numSeats=s.nextInt();
+					System.out.println("Enter the min level");
+					minLevel=s.nextInt();;
+					System.out.println("Enter the Max Level");
+					maxLevel=s.nextInt();
+					System.out.println("Enter the email");
+					customerEmail=s.next();
+					sHold = c.findAndHoldSeats(numSeats, Optional.of(minLevel),Optional.of(maxLevel), customerEmail);
+					System.out.println(sHold.toString());
+					System.out.println(c.numSeatsAvailable(Optional.of(minLevel)));
+					run=true;
+					break;
+					
+				case 3:
+					System.out.println("Reserve Seats");
+					System.out.println(c.reserveSeats(sHold.getSeatHoldId(), sHold.getCustomerEmail()));
+					
+				default:
+						System.out.println("Invalid input, try again");
+						run=true;
+						break;
+				}
+			}catch(Exception e){
+				System.out.println("enter numeric Option ");
+				run=true;
 			}
-			
 		}
+			
+				
 	}
-
 }
+
+
