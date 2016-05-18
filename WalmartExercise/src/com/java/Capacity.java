@@ -6,9 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Capacity {
-//	private HashMap<String, Integer> quantities;
 	private HashMap<Integer, Seating> seat;
-
 	SeatsManager sManager;
 
 	public Capacity() {
@@ -21,36 +19,40 @@ public class Capacity {
 	}
 
 	public int numSeatsAvailable(Optional<Integer> venueLevel) {
-		//sManager.refreshHoldSeats();
+		sManager.refreshHoldSeats();
 		int vLevel = 0;
 		if (venueLevel != null) {
 			vLevel = venueLevel.get();
 		}
 		return sManager.getNumSeatsAvailable(vLevel);
 	}
+	
 	public String levelName(Optional<Integer> venueLevel){
 		return seat.get(venueLevel.get()).getLevelName();
 		
 	}
 
-	public SeatHold findAndHoldSeats(int numSeats, Optional<Integer> minLevel, Optional<Integer> maxLevel,
-			String customerEmail) {
+	public SeatHold findAndHoldSeats(int numSeats, Optional<Integer> minLevel, Optional<Integer> maxLevel,String customerEmail) {
 		int startLevel = minLevel.get() == null ? 1 : minLevel.get();
 		int endLevel = maxLevel.get() == null ? 4 : maxLevel.get();
 		for (int i = startLevel; i <= endLevel; i++) {
 			sManager.refreshHoldSeats();
 			int n = sManager.getNumSeatsAvailable(i);
-			if (n < numSeats)
+			
+			if (n <= numSeats)
 				continue;
+			
 			SeatHold sHold = sManager.holdSeats(customerEmail, i, numSeats);
 			return sHold;
 		}
+		//handle null
 		return null;
 	}
 
 	public String reserveSeats(int seatHoldId, String customerEmail) {
 		int ret = sManager.reserveSeats(seatHoldId, customerEmail);
-		return ret == -1 ? "Error" : "Tickets booked";
+		String rCode=seatHoldId+""+customerEmail;
+		return ret == -1 ? "Error" : ("Tickets booked successfully\n"+"unique ID for booking is "+rCode);
 	}
 
 	public void display() {
@@ -64,5 +66,4 @@ public class Capacity {
 					+ ", Seats = " + entry.getValue().getSeats());
 		}
 	}
-
 }

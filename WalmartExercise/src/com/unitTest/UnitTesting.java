@@ -33,9 +33,9 @@ public void test2() {
 	@Test
 public void test3() {
 		Capacity c=new Capacity();
-	//fail("Not yet implemented");
 		SeatHold seatObj = c.findAndHoldSeats(100, Optional.of(1), Optional.of(2), "x");
-	assertEquals(c.reserveSeats(seatObj.getSeatHoldId(), seatObj.getCustomerEmail()), "Tickets booked");
+		String rCode=seatObj.getSeatHoldId()+""+seatObj.getCustomerEmail();
+	assertEquals(c.reserveSeats(seatObj.getSeatHoldId(), seatObj.getCustomerEmail()), ("Tickets booked successfully\n"+"unique ID for booking is "+rCode));
 }
 
 	@Test
@@ -45,7 +45,7 @@ public void test4() {
 			for(int i=1;i<=4;i++){
 			SeatHold seatObj = c.findAndHoldSeats(100, Optional.of(i), Optional.of(i), "x");
 			int AvailseatCheck=c.numSeatsAvailable(Optional.of(i));
-			System.out.println(AvailseatCheck);
+			//System.out.println(AvailseatCheck);
 			assertEquals(c.numSeatsAvailable(Optional.of(i)), AvailseatCheck);
 }
 	}

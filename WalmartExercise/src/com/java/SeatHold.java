@@ -11,7 +11,6 @@ public class SeatHold {
 	
 	public SeatHold(){
 	}
-	
 	public SeatHold(int seatID, String email, int venueID,int numSeats, Date date){
 		this.seatHoldId=seatID;
 		this.customerEmail=email;
