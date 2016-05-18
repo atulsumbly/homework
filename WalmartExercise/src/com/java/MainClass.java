@@ -1,38 +1,13 @@
 package com.java;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class MainClass {
-public static void testMain() throws InterruptedException{
-	Capacity c=new Capacity();
-	SeatHold sHold;
-	System.out.println("Available Seat in "+c.levelName(Optional.of(1))+" "+c.numSeatsAvailable(Optional.of(1))+"\n");	
-	sHold = c.findAndHoldSeats(100, Optional.of(1),Optional.of(4), "c");
-	System.out.println(sHold.toString());
-	System.out.println("Available Seat in "+c.levelName(Optional.of(1))+" "+c.numSeatsAvailable(Optional.of(1))+"\n");
-	
-	System.out.println("Available Seat in "+c.levelName(Optional.of(1))+" "+c.numSeatsAvailable(Optional.of(1))+"\n");	
-	sHold = c.findAndHoldSeats(100, Optional.of(1),Optional.of(4), "d");
-	System.out.println(sHold.toString());
-	System.out.println("Available Seat in "+c.levelName(Optional.of(1))+" "+c.numSeatsAvailable(Optional.of(1))+"\n");
-	TimeUnit.SECONDS.sleep(15);
-	System.out.println("Available Seat in "+c.levelName(Optional.of(1))+" "+c.numSeatsAvailable(Optional.of(1))+"\n");	
-	sHold = c.findAndHoldSeats(1300, Optional.of(1),Optional.of(4), "a");
-	System.out.println(sHold.toString());
-	System.out.println("Available Seat in "+c.levelName(Optional.of(1))+" "+c.numSeatsAvailable(Optional.of(1))+"\n");
-	
-	System.out.println(c.reserveSeats(sHold.getSeatHoldId(), sHold.getCustomerEmail()));
-	System.out.println("Ticket is booked by cust email: "+sHold.getCustomerEmail());
-	System.out.println("Available Seat in "+c.levelName(Optional.of(sHold.getVenueId()))+" "+c.numSeatsAvailable(Optional.of(sHold.getVenueId())));
-	
-	
-	
-}
 	public static void main(String[] args) {
-	//		testMain();
 			
 		Capacity c=new Capacity();
 		SeatHold sHold=null;
@@ -41,7 +16,7 @@ public static void testMain() throws InterruptedException{
 		boolean run=true;
 		Integer minLevel;
 		Integer maxLevel;
-				
+		
 		while (run){
 			try{
 				Scanner s=new Scanner(System.in);
@@ -84,14 +59,12 @@ public static void testMain() throws InterruptedException{
 					if (sHold==null){
 						System.out.println("desired seats not available");
 					}else
-					System.out.println(sHold.toString());
-					//System.out.println(c.numSeatsAvailable(Optional.of(minLevel)));
+						System.out.println(sHold.toString());
 					for(minLevel=minLevel;minLevel<=maxLevel;minLevel++){
 					System.out.println("Available Seat in "+c.levelName(Optional.of(minLevel))+" "+c.numSeatsAvailable(Optional.of(minLevel)));
 					}
-					//System.out.println("Seats are booked in level "+c.levelName(Optional.of(minLevel)));
 					run=true;
-					System.out.println("Press 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
+					System.out.println("\nPress 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
 					break;
 						
 				case 3:
@@ -106,15 +79,16 @@ public static void testMain() throws InterruptedException{
 				default:
 						System.out.println("Invalid input, try again");
 						run=true;
-						System.out.println("Press 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
+						System.out.println("\nPress 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
 						break;
 				}
 			}
-			catch ( IllegalArgumentException | SecurityException |
-			         ArithmeticException |NullPointerException exc) {
-					run=true;
-					throw exc;
+			catch ( Exception exc) {
+				System.out.println("invalid option");	
+				System.out.println("Press 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
+				run=true;
 			}
+			
 		}
 	}
 }

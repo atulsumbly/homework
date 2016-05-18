@@ -45,7 +45,6 @@ public class Capacity {
 			SeatHold sHold = sManager.holdSeats(customerEmail, i, numSeats);
 			return sHold;
 		}
-		//handle null
 		return null;
 	}
 

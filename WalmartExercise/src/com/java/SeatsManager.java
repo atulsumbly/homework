@@ -67,7 +67,6 @@ public class SeatsManager {
 		Iterator<Entry<Integer, SeatHold>> iterator = seatHoldMap.entrySet().iterator();
 		while(iterator.hasNext()){
 			Map.Entry<Integer, SeatHold> pair = (Map.Entry<Integer, SeatHold>) iterator.next();
-			//System.out.println((new Date()).getTime()  - pair.getValue().getDate().getTime());
 			if((new Date()).getTime()  - pair.getValue().getDate().getTime() >  TIMEDIFF){
 				addAvailability(pair.getValue().getVenueId(), pair.getValue().getNumSeats());
 				seatHoldMap.remove(pair.getKey());
