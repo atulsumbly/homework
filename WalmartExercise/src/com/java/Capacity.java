@@ -1,3 +1,4 @@
+package com.java;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,7 +17,7 @@ public class Capacity {
 		seat.put(4, new Seating("Balcony 2 ", 40.00, 15, 100));
 		sManager = new SeatsManager(seat);
 	}
-//Available number of seats
+
 	public int numSeatsAvailable(Optional<Integer> venueLevel) {
 		sManager.refreshHoldSeats();
 		int vLevel = 0;
@@ -30,7 +31,7 @@ public class Capacity {
 		return seat.get(venueLevel.get()).getLevelName();
 		
 	}
-//finding and holding seats
+
 	public SeatHold findAndHoldSeats(int numSeats, Optional<Integer> minLevel, Optional<Integer> maxLevel,String customerEmail) {
 		int startLevel = minLevel.get() == null ? 1 : minLevel.get();
 		int endLevel = maxLevel.get() == null ? 4 : maxLevel.get();
@@ -46,13 +47,13 @@ public class Capacity {
 		}
 		return null;
 	}
-//reserving seats that are on Hold
+
 	public String reserveSeats(int seatHoldId, String customerEmail) {
 		int ret = sManager.reserveSeats(seatHoldId, customerEmail);
 		String rCode=seatHoldId+""+customerEmail;
 		return ret == -1 ? "Error" : ("Tickets booked successfully\n"+"unique ID for booking is "+rCode);
 	}
-//Display the initial plan of seats
+
 	public void display() {
 		System.out.println("Venue Capacity:");
 

@@ -1,9 +1,14 @@
+package com.java;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class MainClass {
 	public static void main(String[] args) {
+			
 		Capacity c=new Capacity();
 		SeatHold sHold=null;
 		c.display();
@@ -11,10 +16,9 @@ public class MainClass {
 		boolean run=true;
 		Integer minLevel;
 		Integer maxLevel;
-				
+		
 		while (run){
 			try{
-				@SuppressWarnings("resource")
 				Scanner s=new Scanner(System.in);
 				int options=s.nextInt();
 				switch (options){
@@ -22,7 +26,7 @@ public class MainClass {
 					System.out.println("program exits");
 					run=false;
 					break;
-				//check available seats	
+					
 				case 1:
 					int i;
 					System.out.println("Enter the min level for capacity");
@@ -38,7 +42,7 @@ public class MainClass {
 					System.out.println(" Press 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
 					break;
 						
-				//search and hold seats for 10 seconds 		
+						
 				case 2:
 					int numSeats;
 					String customerEmail;
@@ -55,14 +59,14 @@ public class MainClass {
 					if (sHold==null){
 						System.out.println("desired seats not available");
 					}else
-					System.out.println(sHold.toString());
+						System.out.println(sHold.toString());
 					for(minLevel=minLevel;minLevel<=maxLevel;minLevel++){
 					System.out.println("Available Seat in "+c.levelName(Optional.of(minLevel))+" "+c.numSeatsAvailable(Optional.of(minLevel)));
 					}
 					run=true;
-					System.out.println("Press 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
+					System.out.println("\nPress 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
 					break;
-				//reserve seats		
+						
 				case 3:
 					System.out.println("Reserve hold Seats");
 					System.out.println(c.reserveSeats(sHold.getSeatHoldId(), sHold.getCustomerEmail()));
@@ -75,7 +79,7 @@ public class MainClass {
 				default:
 						System.out.println("Invalid input, try again");
 						run=true;
-						System.out.println("Press 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
+						System.out.println("\nPress 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
 						break;
 				}
 			}
@@ -84,6 +88,7 @@ public class MainClass {
 				System.out.println("Press 1 for venue capacity \n press 2 to hold seats \n press 3 to reserve \n 0 to exit");
 				run=true;
 			}
+			
 		}
 	}
 }
